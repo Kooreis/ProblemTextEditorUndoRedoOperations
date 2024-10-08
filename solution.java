@@ -1,14 +1,23 @@
-import java.util.Scanner;
-import java.util.Stack;
-
-public class TextEditor {
-    private Stack<String> undoStack;
-    private Stack<String> redoStack;
-    private String text;
-
-    public TextEditor() {
-        undoStack = new Stack<>();
-        redoStack = new Stack<>();
-        text = "";
+public void type(String newText) {
+        undoStack.push(text);
+        text += newText;
+        redoStack.clear();
     }
-}
+
+    public void undo() {
+        if (!undoStack.isEmpty()) {
+            redoStack.push(text);
+            text = undoStack.pop();
+        }
+    }
+
+    public void redo() {
+        if (!redoStack.isEmpty()) {
+            undoStack.push(text);
+            text = redoStack.pop();
+        }
+    }
+
+    public String getText() {
+        return text;
+    }
