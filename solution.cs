@@ -1,11 +1,26 @@
 ```C#
-using System;
-using System.Collections.Generic;
-
-public class TextEditor
+public void Type(string newText)
 {
-    private string text = "";
-    private Stack<string> undoStack = new Stack<string>();
-    private Stack<string> redoStack = new Stack<string>();
+    undoStack.Push(text);
+    text += newText;
+    redoStack.Clear();
+}
+
+public void Undo()
+{
+    if (undoStack.Count > 0)
+    {
+        redoStack.Push(text);
+        text = undoStack.Pop();
+    }
+}
+
+public void Redo()
+{
+    if (redoStack.Count > 0)
+    {
+        undoStack.Push(text);
+        text = redoStack.Pop();
+    }
 }
 ```
